@@ -3,7 +3,7 @@ fastapi==0.115.6
 uvicorn[standard]==0.34.0  # ASGI server with WebSocket, HTTP/2, and reload support
 
 # Database and ORM
-sqlalchemy[asyncio]==2.0.40 # SQL toolkit and ORM with asyncio support
+sqlalchemy==2.0.40 # SQL toolkit and ORM with asyncio support
 alembic==1.13.1             # Database migration tool for SQLAlchemy
 asyncpg==0.30.0           # Async PostgreSQL driver
 
