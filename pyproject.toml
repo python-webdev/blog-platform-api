@@ -13,3 +13,9 @@ select = ["E", "F", "I"]
 python_version = "3.13"
 strict = true
 ignore_missing_imports = true
+
+[tool.pylint.main]
+ignore-paths = ["^alembic/.*$"]
+
+[tool.pylint.typecheck]
+generated-members = ["alembic.op.*", "alembic.context.*"]
