@@ -58,7 +58,9 @@ def upgrade() -> None:
         sa.PrimaryKeyConstraint("id"),
     )
     op.create_index(op.f("ix_users_email"), "users", ["email"], unique=True)
-    op.create_index(op.f("ix_users_username"), "users", ["username"], unique=True)
+    op.create_index(
+        op.f("ix_users_username"), "users", ["username"], unique=True
+    )
     op.create_table(
         "posts",
         sa.Column("author_id", sa.UUID(), nullable=False),
@@ -81,12 +83,17 @@ def upgrade() -> None:
             nullable=False,
         ),
         sa.CheckConstraint(
-            "status IN ('draft', 'published', 'archived')", name="check_posts_status"
+            "status IN ('draft', 'published', 'archived')",
+            name="check_posts_status",
         ),
-        sa.ForeignKeyConstraint(["author_id"], ["users.id"], ondelete="RESTRICT"),
+        sa.ForeignKeyConstraint(
+            ["author_id"], ["users.id"], ondelete="RESTRICT"
+        ),
         sa.PrimaryKeyConstraint("id"),
     )
-    op.create_index(op.f("ix_posts_author_id"), "posts", ["author_id"], unique=False)
+    op.create_index(
+        op.f("ix_posts_author_id"), "posts", ["author_id"], unique=False
+    )
     op.create_index(op.f("ix_posts_slug"), "posts", ["slug"], unique=True)
     op.create_table(
         "comments",
@@ -107,8 +114,12 @@ def upgrade() -> None:
             server_default=sa.text("now()"),
             nullable=False,
         ),
-        sa.ForeignKeyConstraint(["author_id"], ["users.id"], ondelete="RESTRICT"),
-        sa.ForeignKeyConstraint(["parent_id"], ["comments.id"], ondelete="CASCADE"),
+        sa.ForeignKeyConstraint(
+            ["author_id"], ["users.id"], ondelete="RESTRICT"
+        ),
+        sa.ForeignKeyConstraint(
+            ["parent_id"], ["comments.id"], ondelete="CASCADE"
+        ),
         sa.ForeignKeyConstraint(["post_id"], ["posts.id"], ondelete="CASCADE"),
         sa.PrimaryKeyConstraint("id"),
     )
@@ -118,7 +129,9 @@ def upgrade() -> None:
     op.create_index(
         op.f("ix_comments_parent_id"), "comments", ["parent_id"], unique=False
     )
-    op.create_index(op.f("ix_comments_post_id"), "comments", ["post_id"], unique=False)
+    op.create_index(
+        op.f("ix_comments_post_id"), "comments", ["post_id"], unique=False
+    )
     op.create_table(
         "post_tags",
         sa.Column("post_id", sa.UUID(), nullable=False),
