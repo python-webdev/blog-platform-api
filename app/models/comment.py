@@ -5,14 +5,14 @@ from sqlalchemy import ForeignKey, Text
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from app.models.base import Base, TimestampMixin, UUIDMixin
+from app.models.base import BaseModel
 
 if TYPE_CHECKING:
     from app.models.post import Post
     from app.models.user import User
 
 
-class Comment(UUIDMixin, TimestampMixin, Base):
+class Comment(BaseModel):
     __tablename__ = "comments"
 
     post_id: Mapped[uuid.UUID] = mapped_column(

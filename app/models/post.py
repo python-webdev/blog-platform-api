@@ -12,7 +12,7 @@ from sqlalchemy import (
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from app.models.base import Base, TimestampMixin, UUIDMixin
+from app.models.base import BaseModel
 
 if TYPE_CHECKING:
     from app.models.comment import Comment
@@ -20,7 +20,7 @@ if TYPE_CHECKING:
     from app.models.user import User
 
 
-class Post(UUIDMixin, TimestampMixin, Base):
+class Post(BaseModel):
     __tablename__ = "posts"
     __table_args__ = (
         CheckConstraint(

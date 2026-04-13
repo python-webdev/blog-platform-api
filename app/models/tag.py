@@ -10,14 +10,14 @@ from sqlalchemy import (
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from app.models.base import Base
+from app.models.base import BaseModel
 
 if TYPE_CHECKING:
     from app.models.post import Post
 
 post_tags = Table(
     "post_tags",
-    Base.metadata,
+    BaseModel.metadata,
     Column(
         "post_id",
         UUID(as_uuid=True),
@@ -33,7 +33,7 @@ post_tags = Table(
 )
 
 
-class Tag(Base):
+class Tag(BaseModel):
     __tablename__ = "tags"
 
     id: Mapped[uuid.UUID] = mapped_column(

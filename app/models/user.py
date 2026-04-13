@@ -3,14 +3,14 @@ from typing import TYPE_CHECKING
 from sqlalchemy import Boolean, String, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from app.models.base import Base, TimestampMixin, UUIDMixin
+from app.models.base import BaseModel
 
 if TYPE_CHECKING:
     from app.models.comment import Comment
     from app.models.post import Post
 
 
-class User(UUIDMixin, TimestampMixin, Base):
+class User(BaseModel):
     __tablename__ = "users"
 
     username: Mapped[str] = mapped_column(

@@ -1,7 +1,7 @@
 import uuid
-from datetime import datetime
+from datetime import datetime, timezone
 
-from sqlalchemy import DateTime, text
+from sqlalchemy import DateTime, func
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 
@@ -13,14 +13,12 @@ class Base(DeclarativeBase):
 class TimestampMixin:
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
-        server_default=text("now()"),
-        nullable=False,
+        server_default=func.now(),  # pylint: disable=not-callable
     )
     updated_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
-        server_default=text("now()"),
-        onupdate=datetime.now,
-        nullable=False,
+        server_default=func.now(),  # pylint: disable=not-callable
+        onupdate=lambda: datetime.now(timezone.utc),
     )
 
 
@@ -29,5 +27,8 @@ class UUIDMixin:
         UUID(as_uuid=True),
         primary_key=True,
         default=uuid.uuid4,
-        nullable=False,
     )
+
+
+class BaseModel(UUIDMixin, TimestampMixin, Base):
+    __abstract__ = True
