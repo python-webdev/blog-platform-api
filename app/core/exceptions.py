@@ -10,7 +10,7 @@ class NotFoundError(Exception):
 class PermissionDeniedError(Exception):
     def __init__(self, action: str) -> None:
         self.action = action
-        super().__init__(f"Permission denied for action: {action}")
+        super().__init__(f"Permission denied: {action}")
 
 
 class ConflictError(Exception):
@@ -19,10 +19,5 @@ class ConflictError(Exception):
 
 
 class BusinessRuleViolationError(Exception):
-    def __init__(self, message: str) -> None:
-        super().__init__(message)
-
-
-class ValidationError(Exception):
     def __init__(self, message: str) -> None:
         super().__init__(message)
